@@ -1,10 +1,11 @@
 groups = require('./groups.js');
+localGroups = require('../local/groups.js');
 localComm = require('../local/comm.js');
 
 const comm={
   send: function(params, remote, callback=console.log) {
     try {
-      groups.get('all', (e, groupObj)=>{
+      localGroups.get('all', (e, groupObj)=>{
         if (e!=null) {
           callback(e);
         }

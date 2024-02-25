@@ -2,7 +2,6 @@ id = require('../util/id.js');
 allComm = require('./comm.js');
 
 const groups = {
-  groupMapping: new Map(),
   get: function(key, callback=console.log) {
     const remote = {service: 'groups', method: 'get'};
     const message = [key];
