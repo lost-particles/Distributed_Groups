@@ -1,3 +1,4 @@
+id = require('../util/id.js');
 
 const groups = {
   groupMapping: new Map(),
@@ -14,7 +15,7 @@ const groups = {
     } else {
       this.groupMapping.set(key, group);
     }
-    callback(null, 'Added group to group mapping');
+    callback(null, this.groupMapping);
   },
   del: function(key, callback=console.log) {
     const result = this.groupMapping.delete(key);
