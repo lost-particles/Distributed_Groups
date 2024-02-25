@@ -23,8 +23,7 @@ const groups = {
     if (result) {
       callback(null, deletedGroup);
     } else {
-      callback(null, new Error(
-          'Group key not found. No operation was performed'));
+      callback(new Error('Group key not found. No operation was performed'));
     }
   },
   add: function(key, node, callback=console.log) {
