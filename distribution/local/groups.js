@@ -15,28 +15,28 @@ const groups = {
     } else {
       this.groupMapping.set(key, group);
     }
-    callback(null, this.groupMapping);
+    callback(null, this.groupMapping.get(key));
   },
   del: function(key, callback=console.log) {
-    const result = this.groupMapping.delete(key);
-    if (result) {
-      callback(null, 'Group was deleted successfully');
-    } else {
-      callback(new Error('Group not found. No operation was performed'));
-    }
+    const deletedGroup = this.groupMapping.get(key);
+    this.groupMapping.delete(key);
+    callback(null, deletedGroup);
   },
-  add: function(key, node) {
+  add: function(key, node, callback=console.log) {
     if (this.groupMapping.has(key)) {
       this.groupMapping.get(key)[id.getSID(node)]=node;
       // callback(null, 'Successfully added to the group');
     } // else {
     //  callback(null, 'Group not found');
     // }
+    callback(null, this.groupMapping.get(key));
   },
-  rem: function(key, nodeSID) {
+  rem: function(key, nodeSID, callback) {
+    const deletedNode = this.groupMapping.get(key);
     if (this.groupMapping.has(key)) {
       delete Reflect.get(this.groupMapping.get(key), nodeSID);
     }
+    callback(null, deletedNode);
   },
 };
 
