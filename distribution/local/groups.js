@@ -19,8 +19,11 @@ const groups = {
   },
   del: function(key, callback=console.log) {
     const deletedGroup = this.groupMapping.get(key);
-    this.groupMapping.delete(key);
-    callback(null, deletedGroup);
+    const result = this.groupMapping.delete(key);
+    if (result) {
+      callback(null, deletedGroup);
+    }
+    callback(new Error('Group key not found. No operation was performed'));
   },
   add: function(key, node, callback=console.log) {
     if (this.groupMapping.has(key)) {
@@ -31,10 +34,12 @@ const groups = {
     // }
     callback(null, this.groupMapping.get(key));
   },
-  rem: function(key, nodeSID, callback) {
+  rem: function(key, nodeSID, callback=console.log) {
     const deletedNode = this.groupMapping.get(key);
     if (this.groupMapping.has(key)) {
-      delete Reflect.get(this.groupMapping.get(key), nodeSID);
+      Reflect.deleteProperty(this.groupMapping.get(key), nodeSID);
+    } else {
+      callback(new Error('Node not found.'));
     }
     callback(null, deletedNode);
   },
