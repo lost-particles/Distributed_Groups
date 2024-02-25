@@ -10,9 +10,9 @@ const groups = {
   },
   put: function(key, group, callback=console.log) {
     if (this.groupMapping.has(key)) {
-      this.groupMapping.put(key, {...this.groupMapping.get(key), ...group});
+      this.groupMapping.set(key, {...this.groupMapping.get(key), ...group});
     } else {
-      this.groupMapping.put(key, group);
+      this.groupMapping.set(key, group);
     }
     callback(null, 'Added group to group mapping');
   },
