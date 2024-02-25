@@ -22,8 +22,10 @@ const groups = {
     const result = this.groupMapping.delete(key);
     if (result) {
       callback(null, deletedGroup);
+    } else {
+      callback(null, new Error(
+          'Group key not found. No operation was performed'));
     }
-    callback(new Error('Group key not found. No operation was performed'));
   },
   add: function(key, node, callback=console.log) {
     if (this.groupMapping.has(key)) {
