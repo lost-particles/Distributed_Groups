@@ -2,6 +2,7 @@
 
 const util = require('./distribution/util/util.js');
 const args = require('yargs').argv;
+const serialization = require('./distribution/util/serialization');
 
 // Default configuration
 global.nodeConfig = global.nodeConfig || {
@@ -19,6 +20,11 @@ global.nodeConfig = global.nodeConfig || {
     Usage:
     ./distribution.js --ip '127.0.0.1' --port 1234
   */
+
+// process.send('Raw Args received are : '+
+// serialization.serialize(serialization.deserialize(args)));
+
+
 if (args.ip) {
   global.nodeConfig.ip = args.ip;
 }
@@ -29,11 +35,18 @@ if (args.port) {
 
 if (args.config) {
   let nodeConfig = util.deserialize(args.config);
+  // process.send('Hello from the child process'+
+  // JSON.stringify(nodeConfig.onStart));
   global.nodeConfig.ip = nodeConfig.ip ? nodeConfig.ip : global.nodeConfig.ip;
   global.nodeConfig.port = nodeConfig.port ?
         nodeConfig.port : global.nodeConfig.port;
   global.nodeConfig.onStart = nodeConfig.onStart ?
         nodeConfig.onStart : global.nodeConfig.onStart;
+}
+
+if (args['_']!=null && args['_'][0]!=null) {
+  global.nodeConfig = serialization.deserialize(args['_'][0]);
+  process.send('Args received are : '+JSON.stringify(global.nodeConfig.port));
 }
 
 const distribution = {

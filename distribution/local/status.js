@@ -28,27 +28,36 @@ status.get = function(configuration, callback) {
 };
 
 status.stop = function(callback=console.log) {
+  console.log('Inside stop');
   setTimeout(() => {
     console.log('Stopping the node');
     process.exit();
-  }, 1000);
+  }, 500);
   callback(null, 'Exited Gracefully');
 };
 
-status.spawn = function(config, callback=console.log) {
+status.spawn = function(config, cb=console.log) {
   let onStartFunc;
   if (typeof config['onStart'] == 'function') {
     onStartFunc = config['onStart'];
-    config['onStart'] = wire.createRPC(wire.toAsync(function() {
+    config['onStart'] = wire.createRPC(wire.toAsync(function(...args) {
       onStartFunc();
-      callback(null, 'Child Node started successfully');
+      cb(null, ...args);
     }));
   } else {
-    config['onStart'] = wire.createRPC(wire.toAsync(function() {
-      callback(null, 'Child Node started successfully');
+    config['onStart'] = wire.createRPC(wire.toAsync(function(...args) {
+      console.log('Child Node started successfully, without callback'+args);
+      cb(null, ...args);
     }));
   }
-  cp = childProcess.fork('../distribution.js', serialization.serialize(config));
+  const cp = childProcess.fork('./distribution.js',
+      [serialization.serialize(config)]);
+  cp.on('error', (error) => {
+    console.error('Error in child process:', error);
+  });
+  cp.on('message', (message) => {
+    console.log('Message from child process:', message);
+  });
 };
 
 

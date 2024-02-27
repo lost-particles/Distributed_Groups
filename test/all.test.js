@@ -5,6 +5,7 @@ const distribution = require('../distribution');
 const id = distribution.util.id;
 
 const groupsTemplate = require('../distribution/all/groups');
+const {serialize} = require('../distribution/util/util');
 const mygroupGroup = {};
 
 /*
@@ -94,6 +95,7 @@ test('(2 pts) all.comm.send(status.get(random))', (done) => {
 test('(2 pts) all.groups.del(random)', (done) => {
   distribution.mygroup.groups.del('random', (e, v) => {
     Object.keys(mygroupGroup).forEach((sid) => {
+      console.log(v);
       expect(e[sid]).toBeDefined();
       expect(e[sid]).toBeInstanceOf(Error);
     });
@@ -109,6 +111,7 @@ test('(2 pts) all.groups.put(browncs)', (done) => {
   };
 
   distribution.mygroup.groups.put('browncs', g, (e, v) => {
+    console.log('error received is :'+e);
     expect(e).toEqual({});
     Object.keys(mygroupGroup).forEach((sid) => {
       expect(v[sid]).toEqual(g);
@@ -262,6 +265,7 @@ test('(2 pts) all.status.get(nid)', (done) => {
   const nids = Object.values(mygroupGroup).map((node) => id.getNID(node));
 
   distribution.mygroup.status.get('nid', (e, v) => {
+    console.log('Received error and nids are : '+serialize(e)+serialize(v));
     expect(e).toEqual({});
     expect(Object.values(v).length).toBe(nids.length);
     expect(Object.values(v)).toEqual(expect.arrayContaining(nids));
