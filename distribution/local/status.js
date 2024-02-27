@@ -51,8 +51,10 @@ status.spawn = function(config, cb=console.log) {
       cb(null, ...args);
     }));
   }
-  const cp = childProcess.fork(path.join(__dirname, '../../distribution.js'),
-      [serialization.serialize(config)]);
+  // const cp = childProcess.fork(path.join(__dirname, '../../distribution.js'),
+  //     [serialization.serialize(config)]);
+  const cp = childProcess.spawn('node', [path.join(__dirname, '../../distribution.js'),
+    '--config', serialization.serialize(config)]);
   cp.on('error', (error) => {
     console.error('Error in child process:', error);
   });
