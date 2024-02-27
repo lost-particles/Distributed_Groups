@@ -13,11 +13,11 @@ const groups = {
   },
   put: function(key, group, callback=console.log) {
     if (distribution[key]===undefined) {
-      distribution[key]={'comm': require(path.join(__dirname, '../distribution/all/comm.js'))({gid: key}),
-        'status': require(path.join(__dirname, '../distribution/all/status.js') )({gid: key}),
-        'groups': require(path.join(__dirname, '../distribution/all/groups') )({gid: key}),
-        'routes': require(path.join(__dirname, '../distribution/all/routes.js') )({gid: key}),
-        'gossip': require(path.join(__dirname, '../distribution/all/gossip.js') )({gid: key})};
+      distribution[key]={'comm': require(path.join(__dirname, '../all/comm.js'))({gid: key}),
+        'status': require(path.join(__dirname, '../all/status.js') )({gid: key}),
+        'groups': require(path.join(__dirname, '../all/groups') )({gid: key}),
+        'routes': require(path.join(__dirname, '../all/routes.js') )({gid: key}),
+        'gossip': require(path.join(__dirname, '../all/gossip.js') )({gid: key})};
     }
     if (this.groupMapping.has(key)) {
       this.groupMapping.set(key, {...this.groupMapping.get(key), ...group});
