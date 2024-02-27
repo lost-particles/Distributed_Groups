@@ -2,7 +2,7 @@ const id = require('../util/id');
 const childProcess = require('child_process');
 const wire = require('../util/wire.js');
 const serialization = require('../util/serialization.js');
-path = require('path');
+const path = require('path');
 
 const status = {};
 
