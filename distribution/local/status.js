@@ -2,6 +2,7 @@ const id = require('../util/id');
 const childProcess = require('child_process');
 const wire = require('../util/wire.js');
 const serialization = require('../util/serialization.js');
+path = require('path');
 
 const status = {};
 
@@ -50,7 +51,7 @@ status.spawn = function(config, cb=console.log) {
       cb(null, ...args);
     }));
   }
-  const cp = childProcess.fork('./distribution.js',
+  const cp = childProcess.fork(path.join(__dirname, '../../distribution.js'),
       [serialization.serialize(config)]);
   cp.on('error', (error) => {
     console.error('Error in child process:', error);
