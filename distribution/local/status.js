@@ -53,6 +53,7 @@ status.spawn = function(config, cb=console.log) {
   }
   // const cp = childProcess.fork(path.join(__dirname, '../../distribution.js'),
   //     [serialization.serialize(config)]);
+  console.log('Path generated here is : '+ path.join(__dirname, '../distribution.js'));
   const cp = childProcess.spawn('node', [path.join(__dirname, '../distribution.js'), '--config', serialization.serialize(config)], {detached: true, stdio: 'inherit'});
   cp.on('error', (error) => {
     console.error('Error in child process:', error);
