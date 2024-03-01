@@ -1,6 +1,6 @@
 const id = require('../util/id');
-// const childProcess = require('child_process');
-const {spawn} = require('child_process');
+const childProcess = require('child_process');
+// const {spawn} = require('child_process');
 const wire = require('../util/wire.js');
 const serialization = require('../util/serialization.js');
 const path = require('path');
@@ -60,7 +60,7 @@ status.spawn = function(config, cb=(e, v)=>{}) {
   //     ['../../distribution.js', '--config', serialization.serialize(config)],
   //     {detached: true, stdio: 'inherit'});
 
-  spawn('node', [path.join(__dirname, '../distribution.js'),
+  childProcess.spawn('node', [path.join(__dirname, '../distribution.js'),
     '--config', serialization.serialize(config)]);
 
   // cp.on('error', (error) => {
