@@ -1,4 +1,6 @@
 allComm = require('./comm.js');
+localStatus = require('../local/status');
+allGroups = require('./groups');
 
 let status = (config) => {
   let context = {};
@@ -27,14 +29,21 @@ let status = (config) => {
       allComm(context).send(message, remote, (e, v)=>{
         setTimeout(() => {
           console.log('Stopping the node');
-          process.exit(0);
+          // process.exit(0);
         }, 1000);
       });
     },
 
     spawn: function(spawnConfig, callback) {
+      // localStatus.spawn(spawnConfig, (e, v)=>{
+      //   allGroups(context).add(context.gid, spawnConfig, (e, v)=>{
+      //     callback(e, v);
+      //   });
+      // });
+
+
       const remote = {service: 'status', method: 'spawn'};
-      const message = [];
+      const message = [spawnConfig];
       allComm(context).send(message, remote, (e, v)=>{
         callback(e, v);
       });
