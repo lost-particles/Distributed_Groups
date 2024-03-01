@@ -1,4 +1,3 @@
-groups = require('./groups.js');
 localGroups = require('../local/groups.js');
 localComm = require('../local/comm.js');
 

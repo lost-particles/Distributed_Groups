@@ -93,6 +93,7 @@ test('(2 pts) all.comm.send(status.get(random))', (done) => {
 // // ---all.GROUPS---
 
 test('(2 pts) all.groups.del(random)', (done) => {
+  console.log('groups object is : '+ serialize(distribution.mygroup.groups));
   distribution.mygroup.groups.del('random', (e, v) => {
     Object.keys(mygroupGroup).forEach((sid) => {
       console.log(v);
