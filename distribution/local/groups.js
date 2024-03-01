@@ -16,13 +16,13 @@ const groups = {
         'comm':
           require('../all/comm.js')({gid: key}),
         'status':
-          require('../all/comm.js')({gid: key}),
+          require('../all/status.js')({gid: key}),
         'groups':
-          require('../all/comm.js')({gid: key}),
+          require('../all/groups.js')({gid: key}),
         'routes':
-          require('../all/comm.js')({gid: key}),
+          require('../all/routes.js')({gid: key}),
         'gossip':
-          require('../all/comm.js')({gid: key})};
+          require('../all/gossip.js')({gid: key})};
     }
     if (this.groupMapping.has(key)) {
       this.groupMapping.set(key, {...this.groupMapping.get(key), ...group});
