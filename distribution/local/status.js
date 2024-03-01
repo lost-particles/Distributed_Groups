@@ -1,5 +1,5 @@
 const id = require('../util/id');
-const childProcess = require('child_process');
+const childProcess = require('node:child_process');
 // const {spawn} = require('child_process');
 const wire = require('../util/wire.js');
 const serialization = require('../util/serialization.js');
@@ -52,16 +52,16 @@ status.spawn = function(config, cb=(e, v)=>{}) {
       cb(null, ...args);
     }));
   }
-  // const cp = childProcess.fork(path.join(__dirname, '../../distribution.js'),
-  //     [serialization.serialize(config)]);
+  childProcess.fork(path.join(__dirname, '../../distribution.js'),
+      [serialization.serialize(config)]);
   // console.log('Path generated here is : '+
   //   path.join(__dirname, '../../distribution.js'));
   // const cp = childProcess.spawn('node',
   //     ['../../distribution.js', '--config', serialization.serialize(config)],
   //     {detached: true, stdio: 'inherit'});
 
-  childProcess.spawn('node', [path.join(__dirname, '../../distribution.js'),
-    '--config', serialization.serialize(config)]);
+  // childProcess.spawn('node', [path.join(__dirname, '../../distribution.js'),
+  //   '--config', serialization.serialize(config)]);
 
   // cp.on('error', (error) => {
   //   console.error('Error in child process:', error);
