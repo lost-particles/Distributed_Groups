@@ -1,6 +1,6 @@
 // ---all.COMM---
 
-global.nodeConfig = {ip: '127.0.0.1', port: 8080};
+global.nodeConfig = {ip: '127.0.0.1', port: 8095};
 const distribution = require('../distribution');
 const id = distribution.util.id;
 
