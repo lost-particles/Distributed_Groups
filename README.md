@@ -1,7 +1,7 @@
 # M3: Node Groups & Gossip Protocols
-> Full name: `<first last>`
-> Email:  `<email@brown.edu>`
-> Username:  `cslogin`
+> Full name: `Subham Kumar Das`
+> Email:  `subham_kumar_das@brown.edu`
+> Username:  `sdas52`
 
 ## Summary
 > Summarize your implementation, including key challenges you encountered

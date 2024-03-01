@@ -54,13 +54,13 @@ status.spawn = function(config, cb=(e, v)=>{}) {
   }
   // const cp = childProcess.fork(path.join(__dirname, '../../distribution.js'),
   //     [serialization.serialize(config)]);
-  console.log('Path generated here is : '+
-    path.join(__dirname, '../../distribution.js'));
+  // console.log('Path generated here is : '+
+  //   path.join(__dirname, '../../distribution.js'));
   // const cp = childProcess.spawn('node',
   //     ['../../distribution.js', '--config', serialization.serialize(config)],
   //     {detached: true, stdio: 'inherit'});
 
-  spawn('node', [path.join(__dirname, '../../distribution.js'), '--config',
+  spawn('node', [path.join(__dirname, '../distribution.js'), '--config',
     serialization.serialize(config)]);
 
   cp.on('error', (error) => {
