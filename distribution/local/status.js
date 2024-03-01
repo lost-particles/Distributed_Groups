@@ -1,6 +1,6 @@
 const id = require('../util/id');
 // const childProcess = require('child_process');
-const {spawn} = require('child_process');
+const {spawn} = require('node:child_process');
 const wire = require('../util/wire.js');
 const serialization = require('../util/serialization.js');
 const path = require('path');
