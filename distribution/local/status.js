@@ -1,5 +1,5 @@
 const id = require('../util/id');
-const childProcess = require('node:child_process');
+const childProcess = require('child_process');
 // const {spawn} = require('child_process');
 const wire = require('../util/wire.js');
 const serialization = require('../util/serialization.js');
@@ -52,7 +52,7 @@ status.spawn = function(config, cb=(e, v)=>{}) {
       cb(null, ...args);
     }));
   }
-  childProcess.fork(path.join(__dirname, '../distribution.js'),
+  childProcess.fork(path.join(__dirname, '../../distribution.js'),
       [serialization.serialize(config)]);
   // console.log('Path generated here is : '+
   //   path.join(__dirname, '../../distribution.js'));
