@@ -60,7 +60,7 @@ status.spawn = function(config, cb=(e, v)=>{}) {
   //     ['../../distribution.js', '--config', serialization.serialize(config)],
   //     {detached: true, stdio: 'inherit'});
 
-  spawn('node', [path.join(__dirname, '../../distribution.js'),
+  spawn('node', [path.join(__dirname, '../distribution.js'),
     '--config', serialization.serialize(config)]);
 
   // cp.on('error', (error) => {
