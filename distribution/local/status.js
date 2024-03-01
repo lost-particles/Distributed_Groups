@@ -5,6 +5,7 @@ const wire = require('../util/wire.js');
 const {serialize} = require('../util/util');
 // const serialization = require('../util/serialization.js');
 const path = require('path');
+const localGroups = require('./groups');
 
 const status = {};
 
@@ -32,11 +33,15 @@ status.get = function(configuration, callback) {
 
 status.stop = function(callback=(e, v)=>{}) {
   console.log('Inside stop');
-  setTimeout(() => {
-    console.log('Stopping the node');
-    process.exit(0);
-  }, 500);
-  callback(null, 'Exited Gracefully');
+  // setTimeout(() => {
+  //   console.log('Stopping the node');
+  //   process.exit(0);
+  // }, 500);
+  process.on('exit', (code=0) => {
+    console.log('Process is exiting with code:', code);
+    callback(null, global.nodeConfig);
+  });
+  process.exit(0);
 };
 
 status.spawn = function(config, cb=(e, v)=>{}) {

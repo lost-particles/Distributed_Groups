@@ -1,6 +1,8 @@
 allComm = require('./comm.js');
 localStatus = require('../local/status');
-allGroups = require('./groups');
+localGroups = require('../local/groups.js');
+allGroups = require('./groups.js');
+id = require('../util/id');
 
 let status = (config) => {
   let context = {};
@@ -23,30 +25,43 @@ let status = (config) => {
       });
     },
 
-    stop: function() {
+    stop: function(callback) {
       const remote = {service: 'status', method: 'stop'};
       const message = [];
       allComm(context).send(message, remote, (e, v)=>{
         setTimeout(() => {
           console.log('Stopping the node');
           // process.exit(0);
+          callback(e, v);
         }, 1000);
       });
     },
 
     spawn: function(spawnConfig, callback) {
-      // localStatus.spawn(spawnConfig, (e, v)=>{
-      //   allGroups(context).add(context.gid, spawnConfig, (e, v)=>{
-      //     callback(e, v);
-      //   });
-      // });
-
-
-      const remote = {service: 'status', method: 'spawn'};
-      const message = [spawnConfig];
-      allComm(context).send(message, remote, (e, v)=>{
-        callback(e, v);
+      localStatus.spawn(spawnConfig, (e, v)=>{
+        localGroups.get(context.gid, (e, v)=>{
+          const thisNode = {};
+          const spawnObjHash = id.getSID({ip: spawnConfig['ip'],
+            port: spawnConfig['port']});
+          thisNode[spawnObjHash] = spawnConfig;
+          allGroups(context).put(context.gid, {...v, ...thisNode}, (e, v)=>{
+            if (Object.keys(e).length === 0 ||
+              !e.hasOwnProperty(spawnObjHash)) {
+              callback(null, v[spawnObjHash][spawnObjHash]);
+            } else {
+              callback(e[spawnObjHash],
+                  v[spawnObjHash][spawnObjHash]);
+            }
+          });
+        });
       });
+
+
+      // const remote = {service: 'status', method: 'spawn'};
+      // const message = [spawnConfig];
+      // allComm(context).send(message, remote, (e, v)=>{
+      //   callback(e, v);
+      // });
     },
 
   };
