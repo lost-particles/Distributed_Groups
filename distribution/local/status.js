@@ -60,15 +60,15 @@ status.spawn = function(config, cb=(e, v)=>{}) {
   //     ['../../distribution.js', '--config', serialization.serialize(config)],
   //     {detached: true, stdio: 'inherit'});
 
-  spawn('node', [path.join(__dirname, '../distribution.js'), '--config',
-    serialization.serialize(config)]);
+  spawn('node', [path.join(__dirname, '../distribution.js'),
+    '--config', serialization.serialize(config)]);
 
-  cp.on('error', (error) => {
-    console.error('Error in child process:', error);
-  });
-  cp.on('message', (message) => {
-    console.log('Message from child process:', message);
-  });
+  // cp.on('error', (error) => {
+  //   console.error('Error in child process:', error);
+  // });
+  // cp.on('message', (message) => {
+  //   console.log('Message from child process:', message);
+  // });
 };
 
 
