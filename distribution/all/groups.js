@@ -6,12 +6,12 @@ let groups = (serviceConfig) => {
   let context = {};
   context.gid = serviceConfig.gid || 'all'; // contains a property named gid
   return {
-    get: function(key, callback=console.log) {
+    get: function(key, callback=(e, v)=>{}) {
       const remote = {service: 'groups', method: 'get'};
       const message = [key];
       allComm(context).send(message, remote, callback);
     },
-    put: function(key, group, callback=console.log) {
+    put: function(key, group, callback=(e, v)=>{}) {
       localGroups.put(key, group, (e, v)=>{
         if (e!=null) {
           callback(e);
@@ -22,17 +22,17 @@ let groups = (serviceConfig) => {
         }
       });
     },
-    del: function(key, callback=console.log) {
+    del: function(key, callback=(e, v)=>{}) {
       const remote = {service: 'groups', method: 'del'};
       const message = [key];
       allComm(context).send(message, remote, callback);
     },
-    add: function(key, node, callback=console.log) {
+    add: function(key, node, callback=(e, v)=>{}) {
       const remote = {service: 'groups', method: 'add'};
       const message = [key, node];
       allComm(context).send(message, remote, callback);
     },
-    rem: function(key, nodeSID, callback=console.log) {
+    rem: function(key, nodeSID, callback=(e, v)=>{}) {
       const remote = {service: 'groups', method: 'rem'};
       const message = [key, nodeSID];
       allComm(context).send(message, remote, callback);

@@ -3,14 +3,14 @@ distribution = require('../../distribution');
 
 const groups = {
   groupMapping: new Map(),
-  get: function(key, callback=console.log) {
+  get: function(key, callback=(e, v)=>{}) {
     if (this.groupMapping.has(key)) {
       callback(null, this.groupMapping.get(key));
     } else {
       callback(new Error('Group key not found'));
     }
   },
-  put: function(key, group, callback=console.log) {
+  put: function(key, group, callback=(e, v)=>{}) {
     if (distribution[key]===undefined) {
       distribution[key]={
         'comm':
@@ -31,7 +31,7 @@ const groups = {
     }
     callback(null, this.groupMapping.get(key));
   },
-  del: function(key, callback=console.log) {
+  del: function(key, callback=(e, v)=>{}) {
     const deletedGroup = this.groupMapping.get(key);
     const result = this.groupMapping.delete(key);
     if (result) {
@@ -40,7 +40,7 @@ const groups = {
       callback(new Error('Group key not found. No operation was performed'));
     }
   },
-  add: function(key, node, callback=console.log) {
+  add: function(key, node, callback=(e, v)=>{}) {
     if (this.groupMapping.has(key)) {
       this.groupMapping.get(key)[id.getSID(node)]=node;
       // callback(null, 'Successfully added to the group');
@@ -49,7 +49,7 @@ const groups = {
     // }
     callback(null, this.groupMapping.get(key));
   },
-  rem: function(key, nodeSID, callback=console.log) {
+  rem: function(key, nodeSID, callback=(e, v)=>{}) {
     const deletedNode = this.groupMapping.get(key);
     if (this.groupMapping.has(key)) {
       Reflect.deleteProperty(this.groupMapping.get(key), nodeSID);

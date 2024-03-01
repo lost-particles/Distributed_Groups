@@ -6,7 +6,7 @@ let comm = (config) => {
   let context = {};
   context.gid = config.gid || 'all'; // contains a property named gid
   return {
-    send: function(params, remote, callback=console.log) {
+    send: function(params, remote, callback=(e, v)=>{}) {
       try {
         localGroups.get(context.gid, (e, groupObj)=>{
           if (e!=null) {

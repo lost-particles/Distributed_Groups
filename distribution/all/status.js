@@ -4,7 +4,7 @@ let status = (config) => {
   let context = {};
   context.gid = config.gid || 'all'; // contains a property named gid
   return {
-    get: function(key, callback=console.log) {
+    get: function(key, callback=(e, v)=>{}) {
       let processedResponse = {};
       const remote = {service: 'status', method: 'get'};
       const message = [key];

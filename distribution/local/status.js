@@ -29,7 +29,7 @@ status.get = function(configuration, callback) {
   }
 };
 
-status.stop = function(callback=console.log) {
+status.stop = function(callback=(e, v)=>{}) {
   console.log('Inside stop');
   setTimeout(() => {
     console.log('Stopping the node');
@@ -38,7 +38,7 @@ status.stop = function(callback=console.log) {
   callback(null, 'Exited Gracefully');
 };
 
-status.spawn = function(config, cb=console.log) {
+status.spawn = function(config, cb=(e, v)=>{}) {
   let onStartFunc;
   if (typeof config['onStart'] == 'function') {
     onStartFunc = config['onStart'];
