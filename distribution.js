@@ -44,7 +44,7 @@ if (args.config) {
         nodeConfig.onStart : global.nodeConfig.onStart;
 }
 
-if (args['_']!=null && args['_'][0]!=null) {
+if (args['_']!=null && args['_'][0]!=null && typeof args['_'][0]==='object') {
   global.nodeConfig = serialization.deserialize(args['_'][0]);
   process.send('Args received are : '+JSON.stringify(global.nodeConfig.port));
 }

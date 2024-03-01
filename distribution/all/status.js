@@ -27,7 +27,7 @@ let status = (config) => {
       allComm(context).send(message, remote, (e, v)=>{
         setTimeout(() => {
           console.log('Stopping the node');
-          process.exit();
+          process.exit(0);
         }, 1000);
       });
     },

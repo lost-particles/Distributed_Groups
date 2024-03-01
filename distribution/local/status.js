@@ -1,6 +1,6 @@
 const id = require('../util/id');
 // const childProcess = require('child_process');
-const {spawn} = require('node:child_process');
+const {spawn} = require('child_process');
 const wire = require('../util/wire.js');
 const serialization = require('../util/serialization.js');
 const path = require('path');
@@ -33,7 +33,7 @@ status.stop = function(callback=console.log) {
   console.log('Inside stop');
   setTimeout(() => {
     console.log('Stopping the node');
-    process.exit();
+    process.exit(0);
   }, 500);
   callback(null, 'Exited Gracefully');
 };

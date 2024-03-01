@@ -5,7 +5,7 @@ const distribution = require('../distribution');
 const id = distribution.util.id;
 
 const groupsTemplate = require('../distribution/all/groups');
-const {serialize} = require('../distribution/util/util');
+const {serialize} = require('../distribution/util/util.js');
 const mygroupGroup = {};
 
 /*
@@ -111,7 +111,7 @@ test('(2 pts) all.groups.put(browncs)', (done) => {
   };
 
   distribution.mygroup.groups.put('browncs', g, (e, v) => {
-    console.log('error received is :'+e);
+    console.log('error received is :'+serialize(e));
     expect(e).toEqual({});
     Object.keys(mygroupGroup).forEach((sid) => {
       expect(v[sid]).toEqual(g);
