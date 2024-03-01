@@ -60,7 +60,7 @@ status.spawn = function(config, cb=(e, v)=>{}) {
   //     ['../../distribution.js', '--config', serialization.serialize(config)],
   //     {detached: true, stdio: 'inherit'});
 
-  childProcess.spawn('node', [path.join(__dirname, '../distribution.js'),
+  childProcess.spawn('node', [path.join(__dirname, '../../distribution.js'),
     '--config', serialization.serialize(config)]);
 
   // cp.on('error', (error) => {
