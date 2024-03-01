@@ -2,7 +2,8 @@ const id = require('../util/id');
 const childProcess = require('child_process');
 // const {spawn} = require('child_process');
 const wire = require('../util/wire.js');
-const serialization = require('../util/serialization.js');
+const {serialize} = require('../util/util');
+// const serialization = require('../util/serialization.js');
 const path = require('path');
 
 const status = {};
@@ -61,7 +62,7 @@ status.spawn = function(config, cb=(e, v)=>{}) {
   //     {detached: true, stdio: 'inherit'});
 
   childProcess.spawn('node', [path.join(__dirname, '../../distribution.js'),
-    '--config', serialization.serialize(config)]);
+    '--config', serialize(config)]);
 
   // cp.on('error', (error) => {
   //   console.error('Error in child process:', error);
