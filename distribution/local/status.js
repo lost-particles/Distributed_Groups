@@ -52,7 +52,7 @@ status.spawn = function(config, cb=(e, v)=>{}) {
       cb(null, ...args);
     }));
   }
-  childProcess.fork(path.join(__dirname, '../../distribution.js'),
+  childProcess.fork(path.join(__dirname, '../distribution.js'),
       [serialization.serialize(config)]);
   // console.log('Path generated here is : '+
   //   path.join(__dirname, '../../distribution.js'));
