@@ -138,11 +138,12 @@ const start = function(onStart) {
 
   server.listen(global.nodeConfig.port, global.nodeConfig.ip, () => {
     console.log(`Server running at http://${global.nodeConfig.ip}:${global.nodeConfig.port}/`);
-    setTimeout(() => {
-      onStart(server, (e, v)=>{
-        console.log('RPC reverse callback executed');
-      });
-    }, 1000);
+    // setTimeout(() => {
+    //
+    // }, 100);
+    onStart(server, (e, v)=>{
+      console.log('RPC reverse callback executed');
+    });
   });
 };
 
