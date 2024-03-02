@@ -17,7 +17,9 @@ const mygroupGroup = {};
 let localServer = null;
 
 beforeAll((done) => {
-  const n1 = {ip: '127.0.0.1', port: 8000};
+  const n1 = {ip: '127.0.0.1', port: 8000, onStart: (server)=>{
+    console.log('Hey this is me');
+  }};
   const n2 = {ip: '127.0.0.1', port: 8001};
   const n3 = {ip: '127.0.0.1', port: 8002};
 

@@ -5,7 +5,6 @@ const wire = require('../util/wire.js');
 const {serialize} = require('../util/util');
 // const serialization = require('../util/serialization.js');
 const path = require('path');
-const localGroups = require('./groups');
 
 const status = {};
 
@@ -45,19 +44,28 @@ status.stop = function(callback=(e, v)=>{}) {
 };
 
 status.spawn = function(config, cb=(e, v)=>{}) {
-  let onStartFunc;
+  let onStartFuncDef='';
   if (typeof config['onStart'] == 'function') {
-    onStartFunc = config['onStart'];
-    config['onStart'] = wire.createRPC(wire.toAsync(function(...args) {
-      onStartFunc();
-      cb(null, ...args);
-    }));
-  } else {
-    config['onStart'] = wire.createRPC(wire.toAsync(function(...args) {
-      console.log('Child Node started successfully, without callback'+args);
-      cb(null, ...args);
-    }));
+    // onStartFuncDef = serialize(config['onStart']);
+    // const rpcFunc = wire.createRPC(wire.toAsync(function(...args) {
+    //   console.log('Child Node started successfully, without callback'+args);
+    //   cb(null, ...args);
+    // }));
+    // const newFunc = function(server, callback) {
+    //   const givenStartFunc = serialization.deserialize(onStartFuncDef);
+    //   givenStartFunc(server);
+    //   // onStartFunc(server);
+    //   rpcFunc(server, callback);
+    // };
+    // config['onStart'] = newFunc;
+
+    onStartFuncDef = serialize(config['onStart']);
   }
+
+  config['onStart'] = wire.createRPC(wire.toAsync(function(...args) {
+    console.log('Child Node started successfully, without callback'+args);
+    cb(null, ...args);
+  }));
   // childProcess.fork(path.join(__dirname, '../../distribution.js'),
   //     [serialization.serialize(config)]);
   // console.log('Path generated here is : '+
@@ -66,8 +74,11 @@ status.spawn = function(config, cb=(e, v)=>{}) {
   //     ['../../distribution.js', '--config', serialization.serialize(config)],
   //     {detached: true, stdio: 'inherit'});
 
+  let serializedConfig = serialize(config);
+  // serializedConfig = serializedConfig.replace('onStartFuncDef', onStartFuncDef.replace('"', '\\"'));
+
   childProcess.spawn('node', [path.join(__dirname, '../../distribution.js'),
-    '--config', serialize(config)]);
+    '--config', serializedConfig]);
 
   // cp.on('error', (error) => {
   //   console.error('Error in child process:', error);
