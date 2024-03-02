@@ -45,7 +45,7 @@ status.stop = function(callback=(e, v)=>{}) {
 };
 
 status.spawn = function(config, cb=(e, v)=>{}) {
-  let onStartFuncDef='';
+  // let onStartFuncDef='';
   if (typeof config['onStart'] == 'function') {
     // onStartFuncDef = serialize(config['onStart']);
     // const rpcFunc = wire.createRPC(wire.toAsync(function(...args) {

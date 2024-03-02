@@ -20,7 +20,8 @@ const groups = {
         'groups':
           require('../all/groups.js')({gid: key}),
         'routes':
-          require('../all/routes.js')({gid: key})};
+          require('../all/routes.js')({gid: key}),
+        'gossip': require('../all/gossip.js')({gid: key})};
     }
     if (this.groupMapping.has(key)) {
       this.groupMapping.set(key, {...this.groupMapping.get(key), ...group});

@@ -32,7 +32,7 @@ if (args.ip) {
 if (args.port) {
   global.nodeConfig.port = parseInt(args.port);
 }
-let composeFunc = null;
+// let composeFunc = null;
 if (args.config) {
   let nodeConfig = util.deserialize(args.config);
   // process.send('Hello from the child process'+
@@ -42,14 +42,14 @@ if (args.config) {
         nodeConfig.port : global.nodeConfig.port;
   global.nodeConfig.onStart = nodeConfig.onStart ?
         nodeConfig.onStart : global.nodeConfig.onStart;
-  if (args.onStartFuncDef) {
-    const onStartFuncDef = util.deserialize(args.onStartFuncDef);
-    const onStartFunc = global.nodeConfig.onStart;
-    composeFunc = function(server, callback) {
-      onStartFuncDef(server);
-      onStartFunc(server, callback);
-    };
-  }
+  // if (args.onStartFuncDef) {
+  //   const onStartFuncDef = util.deserialize(args.onStartFuncDef);
+  //   const onStartFunc = global.nodeConfig.onStart;
+  //   composeFunc = function(server, callback) {
+  //     onStartFuncDef(server);
+  //     onStartFunc(server, callback);
+  //   };
+  // }
 }
 
 // if (args['_']!=null && args['_'][0]!=null &&
@@ -71,9 +71,10 @@ module.exports = distribution;
 
 /* The following code is run when distribution.js is run directly */
 if (require.main === module) {
-  if (composeFunc!=null) {
-    distribution.node.start(composeFunc);
-  } else {
-    distribution.node.start(global.nodeConfig.onStart);
-  }
+  // if (composeFunc!=null) {
+  //   distribution.node.start(composeFunc);
+  // } else {
+  //   distribution.node.start(global.nodeConfig.onStart);
+  // }
+  distribution.node.start(global.nodeConfig.onStart);
 }

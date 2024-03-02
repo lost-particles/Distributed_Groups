@@ -41,8 +41,9 @@ let status = (config) => {
       localStatus.spawn(spawnConfig, (e, v)=>{
         localGroups.get(context.gid, (e, v)=>{
           const thisNode = {};
-          const spawnObjHash = id.getSID({ip: spawnConfig['ip'],
-            port: spawnConfig['port']});
+          const spawnObj = {ip: spawnConfig['ip'],
+            port: spawnConfig['port']};
+          const spawnObjHash = id.getSID(spawnObj);
           thisNode[spawnObjHash] = spawnConfig;
           allGroups(context).put(context.gid, {...v, ...thisNode}, (e, v)=>{
             if (Object.keys(e).length === 0 ||
