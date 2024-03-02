@@ -78,7 +78,7 @@ status.spawn = function(config, cb=(e, v)=>{}) {
   // serializedConfig = serializedConfig.replace('onStartFuncDef', onStartFuncDef.replace('"', '\\"'));
 
   childProcess.spawn('node', [path.join(__dirname, '../../distribution.js'),
-    '--config', serializedConfig]);
+    '--config', serializedConfig, '--onStartFuncDef', onStartFuncDef]);
 
   // cp.on('error', (error) => {
   //   console.error('Error in child process:', error);
