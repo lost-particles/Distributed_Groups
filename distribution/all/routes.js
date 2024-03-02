@@ -7,7 +7,7 @@ let routes = (config) => {
     put: function(serviceObj, serviceName, callback=(e, v)=>{}) {
       const remote = {service: 'routes', method: 'put'};
       const message = [serviceObj, serviceName];
-      allComm(context).send(message, remote, callback);
+      global.distribution[context.gid].comm.send(message, remote, callback);
     },
   };
 };

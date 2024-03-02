@@ -12,7 +12,7 @@ let status = (config) => {
       let processedResponse = {};
       const remote = {service: 'status', method: 'get'};
       const message = [key];
-      allComm(context).send(message, remote, (groupErrors, response)=>{
+      global.distribution[context.gid].comm.send(message, remote, (groupErrors, response)=>{
         if (key in ['counts', 'heapTotal', 'heapUsed']) {
           processedResponse[key]=0;
           response.forEach((eachKey)=>{
@@ -28,7 +28,7 @@ let status = (config) => {
     stop: function(callback) {
       const remote = {service: 'status', method: 'stop'};
       const message = [];
-      allComm(context).send(message, remote, (e, v)=>{
+      global.distribution[context.gid].comm.send(message, remote, (e, v)=>{
         setTimeout(() => {
           console.log('Stopping the node');
           // process.exit(0);
@@ -60,7 +60,7 @@ let status = (config) => {
 
       // const remote = {service: 'status', method: 'spawn'};
       // const message = [spawnConfig];
-      // allComm(context).send(message, remote, (e, v)=>{
+      // global.distribution[context.gid].comm.send(message, remote, (e, v)=>{
       //   callback(e, v);
       // });
     },
