@@ -60,13 +60,22 @@ status.spawn = function(config, cb=(e, v)=>{}) {
     // };
     // config['onStart'] = newFunc;
 
-    onStartFuncDef = serialize(config['onStart']);
+    funcStr = `
+let onStart = ${config['onStart'].toString()};
+let callbackRPC = ${wire.createRPC(wire.toAsync(cb)).toString()};
+onStart();
+callbackRPC(null, global.nodeConfig, () => {});
+`;
+    config['onStart'] = new Function(funcStr)();
+    // onStartFuncDef = serialize(config['onStart']);
+  } else {
+    config['onStart'] = wire.createRPC(wire.toAsync(function(...args) {
+      console.log('Child Node started successfully, without callback'+args);
+      cb(null, ...args);
+    }));
   }
 
-  config['onStart'] = wire.createRPC(wire.toAsync(function(...args) {
-    console.log('Child Node started successfully, without callback'+args);
-    cb(null, ...args);
-  }));
+
   // childProcess.fork(path.join(__dirname, '../../distribution.js'),
   //     [serialization.serialize(config)]);
   // console.log('Path generated here is : '+
@@ -76,10 +85,13 @@ status.spawn = function(config, cb=(e, v)=>{}) {
   //     {detached: true, stdio: 'inherit'});
 
   let serializedConfig = serialize(config);
-  // serializedConfig = serializedConfig.replace('onStartFuncDef', onStartFuncDef.replace('"', '\\"'));
+  // serializedConfig = serializedConfig.
+  // replace('onStartFuncDef', onStartFuncDef.replace('"', '\\"'));
 
   childProcess.spawn('node', [path.join(__dirname, '../../distribution.js'),
-    '--config', serializedConfig, '--onStartFuncDef', onStartFuncDef]);
+    '--config', serializedConfig]);
+
+  // , '--onStartFuncDef', onStartFuncDef
 
   // cp.on('error', (error) => {
   //   console.error('Error in child process:', error);
