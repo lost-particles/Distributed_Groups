@@ -141,6 +141,7 @@ const start = function(onStart) {
     // setTimeout(() => {
     //
     // }, 100);
+    global.server = server;
     onStart(server, (e, v)=>{
       console.log('RPC reverse callback executed');
     });

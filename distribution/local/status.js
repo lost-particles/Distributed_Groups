@@ -37,6 +37,7 @@ status.stop = function(callback=(e, v)=>{}) {
   //   process.exit(0);
   // }, 500);
   process.on('exit', (code=0) => {
+    global.server.close();
     console.log('Process is exiting with code:', code);
     callback(null, global.nodeConfig);
   });
